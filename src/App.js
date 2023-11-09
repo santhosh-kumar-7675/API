@@ -1,23 +1,35 @@
-import logo from './logo.svg';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import Team from './pages/team';
+import Members from './pages/members';
+import Home from './pages/home';
+import { useSelector } from "react-redux";
 
 function App() {
+  const teamMembers = useSelector((state) => state.teamReducer.teamMembers);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <nav className="navbar">
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/members">Members</Link>
+          </li>
+          <li>
+            <Link to="/team">Team</Link>
+                <span className="badge">{teamMembers.length}</span>
+          </li>
+         
+        </nav>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/team" element={<Team />} />
+          <Route path="/members" element={<Members />} />
+        </Routes>
+      </div>
     </div>
   );
 }
